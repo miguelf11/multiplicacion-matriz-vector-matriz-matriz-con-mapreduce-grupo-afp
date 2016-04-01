@@ -36,8 +36,10 @@ close(con.vector,type="r")
 memoria.limite <- memlimit(limite)
 
 
-#cantidad de N que puedo leer
-maximo.leer.matriz = as.integer(memoria.limite %/% tam.matriz) / 2
+# cantidad de M valores que puedo leer tomando en cuenta de que necesito leer n de del vector fila
+# de la matriz y M valores del vector a multiplicar
+max = as.integer(memoria.limite %/% tam.matriz) / 2
+max <- 1 #probando
 
 #vuelvo a abrir la coneccion 
 con.matriz <- file(matriz, "r")
@@ -45,7 +47,7 @@ con.vector <- file(vector, "r")
 
 
 con.resultado <- file("resultado_vector.csv", "w")
-if (maximo.leer.matriz > n){
+if (max > n){
   # then i can read all vector and all first row of the matrix
   # to calculate the first row of the new vector
   
@@ -60,16 +62,26 @@ if (maximo.leer.matriz > n){
     writeLines(c,con.resultado)
   }
   
-}#else{
-  #for(i in 1:maximo.leer.matriz){
-   # for (j in 1:n){
-      
-    #}
-    
-  #}
+}else{
+  # m es cuantos valores del vector se puede leer
+  # crear archivo intermedia para ir guardando la suma
+  # 
+  m <- n/max
+  for(j in 1:n){
+    for(i in 1:m){
+      valores.vector <- as.numeric(unlist(strsplit(readLines(con.vector,max
+                                                             ,warn = FALSE),",")))
+      valores.vector <- valores.vector[seq(from = 2 , to = n*2 , by = 2)]
+      con.intermedio <- file("intermedio.csv", "w")
+      valores.matriz <- as.numeric(unlist(strsplit(readLines(con.matriz,max,warn = FALSE),",")))
+      valores.matriz <- valores.matriz[seq(from = 3, to = n*3,by = 3 )]
+      print(vxv(valores.matriz,valores.vector))
+      writeLines(as.character(vxv(valores.matriz,valores.vector)),con.intermedio)
+    }
+  }
   
   
-#}
+}
 
 
 
@@ -77,6 +89,8 @@ if (maximo.leer.matriz > n){
 close(con.matriz,type="r")
 close(con.vector,type="r")
 close(con.resultado,type="w")
+close(con.intermedio,type="w")
+
 
 
 
