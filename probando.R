@@ -1,5 +1,10 @@
 setwd("C:/Users/Alex/Documents/R/Proy_ICD/Proyecto")
 
+library("parallel")
+library("foreach")
+library("doParallel")
+
+
 vxv <- function (vector1,vector2){
   #vector 1 es el vector de la matriz
   #vector 2 es el vector
@@ -10,12 +15,13 @@ vxv <- function (vector1,vector2){
   return (sum) 
 }
 
+
+
+
 matriz <- "tblAkv3x3.csv"
 vector <- "tblxkv3.csv"
 n <- 3
 max <- 1 #probando
-
-
 
 
 con.matriz <- file(matriz, "r")
