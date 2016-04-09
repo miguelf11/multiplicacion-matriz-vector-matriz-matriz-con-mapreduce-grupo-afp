@@ -1,5 +1,4 @@
 productmv <- function(matriz,vector,n,limite = -1 ){
-  
   # funcion que multiplica 2 vectores de igual forma
   # como se necesita en la multiplicacion matriz- vector
   vxv <- function (vector1,vector2){
@@ -16,6 +15,7 @@ productmv <- function(matriz,vector,n,limite = -1 ){
   con.matriz <- file(matriz, "r")
   con.vector <- file(vector, "r")
   
+  
   # read just 1 value to know the size of the string and so
   # know the max of values that can read in memory
   tam.matriz <- object.size(readLines(con.matriz,1))
@@ -29,9 +29,10 @@ productmv <- function(matriz,vector,n,limite = -1 ){
   memoria.limite <- memlimit(limite)
   
   
-  #cantidad de N valores que puedo leer
-  maximo.leer.matriz = as.integer(memoria.limite %/% tam.matriz) / 2
-  
+  #cantidad de N valores que puedo leer o almacenar en memoria
+  maximo.leer.matriz <-  as.integer(memoria.limite / tam.matriz) %/% 2
+  maximo.leer.matriz <- 2
+  max <- 2
   
   
   if (maximo.leer.matriz > n){
@@ -42,34 +43,43 @@ productmv <- function(matriz,vector,n,limite = -1 ){
     con.matriz <- file(matriz, "r")
     con.vector <- file(vector, "r")
     
-    #its the same vector for al the rows of the matrix
+    #its the same vector for all the rows of the matrix
     valores.vector <- as.numeric(unlist(strsplit(readLines(con.vector,n,warn = FALSE),",")))
     valores.vector <- valores.vector[seq(from = 2 , to = n*2 , by = 2)]
     for (i in 1:n){
       valores.matriz <- as.numeric(unlist(strsplit(readLines(con.matriz,n,warn = FALSE),",")))
       valores.matriz <- valores.matriz[seq(from = 3, to = n*3,by = 3 )]
       c <- c(paste(i,as.character(vxv(valores.matriz,valores.vector)),sep=","))
-      print(c)
+      #print(c)
       writeLines(c,con.resultado)
-      
     }
     close(con.matriz,type="r")
     close(con.vector,type="r")
     close(con.resultado,type="w")
     
   }else{
+    #n-(i*maximo.leer.matriz)
     #vector not fit in memory 
     con.matriz <- file(matriz, "r")
     con.resultado <- file("resultado_vector.csv", "w")
     for(j in 1:n){
       con.vector <- file(vector, "r")
       con.intermedio <- file("intermedio.csv", "w")
-      for(i in 1:(n/max)){
-        valores.vector <- as.numeric(unlist(strsplit(readLines(con.vector,max
-                                                               ,warn = FALSE),",")))
+      for(i in 1:ceiling(n/maximo.leer.matriz)){
+        valores.vector <- as.numeric(unlist(strsplit(readLines(con.vector,max,
+                                                               warn = FALSE),",")))
         valores.vector <- valores.vector[seq(from = 2 , to = max*2 , by = 2)]
-        valores.matriz <- as.numeric(unlist(strsplit(readLines(con.matriz,max,warn = FALSE),",")))
-        valores.matriz <- valores.matriz[seq(from = 3, to = max*3,by = 3 )]
+        if (n < i*maximo.leer.matriz){
+          valores.matriz <- as.numeric(unlist(strsplit(readLines(
+            con.matriz, n = (i*maximo.leer.matriz) - n,warn = FALSE),",")))
+          
+          valores.matriz <- valores.matriz[seq(from = 3, to = max*3,by = 3 )]
+          valores.matriz <- valores.matriz[!is.na(valores.matriz)]
+          
+        }else{
+          valores.matriz <- as.numeric(unlist(strsplit(readLines(con.matriz,max,warn = FALSE),",")))
+          valores.matriz <- valores.matriz[seq(from = 3, to = max*3,by = 3 )]
+        }
         writeLines(as.character(vxv(valores.matriz,valores.vector)),con.intermedio)
       }
       rm(valores.vector)
@@ -78,13 +88,13 @@ productmv <- function(matriz,vector,n,limite = -1 ){
       close(con.intermedio,type="w")
       con.intermedio <- file("intermedio.csv", "r")
       suma <- 0
-      for(k in 1:ceiling(n/2*max)){
-        suma <- suma + sum(as.numeric(readLines(con.intermedio,n = 2*max)))
-        print(paste(j,suma,sep=","))
+      for(k in 1:ceiling(n/max)){
+        suma <- suma + sum(as.numeric(readLines(con.intermedio,n = maximo.leer.matriz)))
+        #print(paste(j,suma,sep=","))
       }
       close(con.intermedio,type="r")
       c <- c(paste(j,suma,sep=","))
-
+      
       writeLines(c,con.resultado)
       #the result it is in the file resultado.csv
       
@@ -94,5 +104,4 @@ productmv <- function(matriz,vector,n,limite = -1 ){
     close(con.matriz,type="r")
     close(con.resultado,type="w")
   }
-
 }
