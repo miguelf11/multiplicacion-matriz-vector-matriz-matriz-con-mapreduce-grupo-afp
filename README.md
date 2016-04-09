@@ -9,6 +9,9 @@ multiplicacion-matriz-vector-matriz-matriz-con-mapreduce-grupo-afp created by Cl
 - Hacer uso de la libreria parallel para hacer la mult matriz - vector más eficiente
 - Hacer la funcion de multiplicacion matriz - matriz
 
+# Terminado:
+
+- multiplicacion matriz-vector
 
 
 # Developers
