@@ -1,20 +1,13 @@
 # multiplicacion-matriz-vector-matriz-matriz-con-mapreduce-grupo-afp
 multiplicacion-matriz-vector-matriz-matriz-con-mapreduce-grupo-afp created by Classroom for GitHub
 
+# Setup
+El proyecto fue realizado en sistema operativo basado en Windows, por lo que se recomienda el uso del mismo para realizar las pruebas pertinentes, ya que no se garantiza que ciertas funciones inerentes de R usadas en Windows funcionen en sistemas basados en Unix.
 
-# Cosas por hacer:
-
-
-- Revisen el probando_parallel, esa es la forma que se me había ocurrido de paralelizar partes de la función pero al menos en mi computadora pareciera menos eficiente que haciendolo normmal 
-- Hacer uso de la libreria parallel para hacer la mult matriz - vector más eficiente
-- Hacer la funcion de multiplicacion matriz - matriz
-
-# Terminado:
-
-- multiplicacion matriz-vector
+El desarrollo del proyecto fue realizado siguiendo la mayoría de las configuraciones sugeridas en el enunciado a través del enlace de [Google Style Guide de R](https://google.github.io/styleguide/Rguide.xml)
 
 
-# Developers
+# Desarrolladores
 
 - Luis Aguiar
 - Miguel Figueira
