@@ -1,6 +1,8 @@
 productmv <- function(matriz,vector,n,limite = -1 ){
   # funcion que multiplica 2 vectores de igual forma
   # como se necesita en la multiplicacion matriz- vector
+  source("memlimit.R")
+  
   vxv <- function (vector1,vector2){
     #vector 1 es el vector de la matriz
     #vector 2 es el vector

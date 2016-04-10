@@ -1,6 +1,8 @@
 productmm <- function(matriz,matriz2,num,limite = -1){
   # funcion que calcula multiplicacion matriz con matriz
   
+  source("memlimit.R")
+  
   vxv <- function (vector1,vector2){
     #vector 1 es el vector de la matriz
     #vector 2 es el vector
@@ -70,7 +72,6 @@ productmm <- function(matriz,matriz2,num,limite = -1){
         for(k in 1:ceiling(n/maximo.leer.matriz)){
           
           if (num < k*maximo.leer.matriz){
-            #print(paste("n:",n,"k:",k,"max:",max))
             valores.matriz <- as.numeric(unlist(strsplit(readLines(con.matriz,n = (num - (k-1)*max),warn = FALSE),",")))
             aux <- length(valores.matriz)
             valores.matriz <- valores.matriz[seq(from = 3, to = (max*3),by = 3 )]
@@ -93,9 +94,6 @@ productmm <- function(matriz,matriz2,num,limite = -1){
               c <- c(c,a$V3)
             }
           }
-          print(paste("i:",i,"j:",j,"k:",k))
-          print(valores.matriz)
-          print(c)
           writeLines(as.character(vxv(valores.matriz,c)),con.intermedio)
           rm (valores.matriz)
           rm(c)
