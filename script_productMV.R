@@ -72,7 +72,6 @@ if (maximo.leer.matriz > n){
   close(con.resultado,type="w")
   
 }else{
-  #n-(i*maximo.leer.matriz)
   #vector not fit in memory 
   con.matriz <- file(matriz, "r")
   con.resultado <- file("resultado_vector.csv", "w")
