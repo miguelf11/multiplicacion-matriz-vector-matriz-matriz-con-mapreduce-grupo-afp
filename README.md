@@ -2,8 +2,6 @@
 title: "Multiplicación Matriz-Vector y Matriz-Matriz usando Mapreduce"
 author: "Luis Aguiar, Miguel Figueira, David Padrino"
 date: "Sabado, 9 de abril de 2016"
-widescreen: yes
-runtime: shiny
 ---
 # Proyecto Introducción a la Ciencia de Datos 2-2015
 # Facultad de Ciencias UCV
